@@ -28,7 +28,7 @@ namespace KitchenCountUp
 
         public void UpdateText()
         {
-            TMP.text = IconString + (Remaining + Additional).ToString();
+            TMP.text = $"{IconString}<cspace=-35>{Remaining + Additional}</cspace>";
         }
     }
 }
