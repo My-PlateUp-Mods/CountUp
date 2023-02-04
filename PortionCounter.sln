@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CountUp", "CountUp.csproj", "{F9086435-4BC0-48AC-B0EE-E2A345DE53C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		WORKSHOP|Any CPU = WORKSHOP|Any CPU
+		WORKSHOPMONO|Any CPU = WORKSHOPMONO|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F9086435-4BC0-48AC-B0EE-E2A345DE53C4}.WORKSHOP|Any CPU.ActiveCfg = WORKSHOP|Any CPU
+		{F9086435-4BC0-48AC-B0EE-E2A345DE53C4}.WORKSHOP|Any CPU.Build.0 = WORKSHOP|Any CPU
+		{F9086435-4BC0-48AC-B0EE-E2A345DE53C4}.WORKSHOPMONO|Any CPU.ActiveCfg = WORKSHOPMONO|Any CPU
+		{F9086435-4BC0-48AC-B0EE-E2A345DE53C4}.WORKSHOPMONO|Any CPU.Build.0 = WORKSHOPMONO|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1634487D-99DB-4190-964E-B10728E01C6A}
+	EndGlobalSection
+EndGlobal

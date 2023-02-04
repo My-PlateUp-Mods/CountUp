@@ -1,1 +1,1 @@
-xcopy /Y "WorkshopFolder" "E:\SteamLibrary\steamapps\common\PlateUp\PlateUp\Mods\PortionCounter" /s /e /i
+xcopy /Y "WorkshopFolder" "E:\SteamLibrary\steamapps\common\PlateUp\PlateUp\Mods\CountUp\content" /s /e /i
