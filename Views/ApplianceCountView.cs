@@ -16,6 +16,8 @@ namespace KitchenCountUp.Views
 
         protected override void UpdateData(ViewData data)
         {
+            if (CountText == null)
+                return;
             CountText.gameObject.SetActive(data.UseCount);
             CountText.text = data.Count.ToString();
         }
@@ -41,10 +43,12 @@ namespace KitchenCountUp.Views
                     var useCount = (hasProvider && Mod.LimitedProviderPreference.Get() && provider.Maximum > 1) || (hasBin && Mod.BinPreference.Get() && bin.Capacity < 300);
                     SendUpdate(view, new ViewData()
                     {
-                        Count = useCount ? (hasProvider ? provider.Available : hasBin ? bin.Capacity - bin.CurrentAmount : 0) : 0,
+                        Count = useCount ? (hasProvider && provider.Maximum < 100 ? provider.Available : hasBin ? bin.Capacity - bin.CurrentAmount : 0) : 0,
                         UseCount = useCount
                     }, MessageType.SpecificViewUpdate);
                 }
+
+                entities.Dispose();
             }
         }
 

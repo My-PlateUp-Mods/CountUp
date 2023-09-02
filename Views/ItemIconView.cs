@@ -75,6 +75,8 @@ namespace KitchenCountUp.Views
 
                 }
 
+                entities.Dispose();
+
             }
         }
 

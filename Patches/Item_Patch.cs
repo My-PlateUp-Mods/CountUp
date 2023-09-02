@@ -15,7 +15,7 @@ namespace KitchenCountUp.Patches
             if (!Mod.UpdateIconsPreference.Get())
                 return;
 
-            if (item.IsSplittable && item.IsIndisposable && item.SplitCount > 300 && item.PreventExplicitSplit)
+            if (item.IsSplittable && item.PreventExplicitSplit)
                 __result = "<sprite name=\"upgrade\">";
         }
     }
