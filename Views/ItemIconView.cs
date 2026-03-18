@@ -1,4 +1,4 @@
-﻿using Kitchen;
+using Kitchen;
 using Kitchen.Modules;
 using KitchenData;
 using KitchenMods;
@@ -8,6 +8,7 @@ using TMPro;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
+using Kitchen.NetworkSupport;
 
 namespace KitchenCountUp.Views
 {
@@ -43,38 +44,32 @@ namespace KitchenCountUp.Views
             ProcessIcons.text = Mod.ItemSplitPreference.Get() && Data.Count > 0 && Data.Count < 300 ? Data.Count.ToString() : "";
         }
 
+        [UpdateInGroup(typeof(ViewSystemsGroup))]
         public class UpdateView : IncrementalViewSystemBase<ViewData>, IModSystem
         {
             private EntityQuery query;
+
             protected override void Initialise()
             {
-                query = GetEntityQuery(new QueryHelper().All(typeof(CItem), typeof(CLinkedView)));
+                query = GetEntityQuery(new QueryHelper().All(typeof(CCountUpItem), typeof(CLinkedView)));
             }
 
             protected override void OnUpdate()
             {
                 var entities = query.ToEntityArray(Allocator.Temp);
-
                 foreach (var entity in entities)
                 {
-                    Require<CItem>(entity, out var itemComp);
+                    Require<CCountUpItem>(entity, out var countUp);
                     Require<CLinkedView>(entity, out var view);
-
-                    if (!GameData.Main.TryGet<Item>(itemComp.ID, out var item))
-                        continue;
-
-                    int splitAdditive = item.IsSplittable && item.SplitDepletedItems.Contains(item.SplitSubItem) ? 1 : 0;
 
                     SendUpdate(view, new ViewData()
                     {
-                        ItemID = itemComp.ID,
-                        Count = Require<CSplittableItem>(entity, out var splittable) ? splittable.RemainingCount + splitAdditive : 0,
-                        UndergoingProcess = Has<CItemUndergoingProcess>(entity),
-                        IsPartial = itemComp.IsPartial,
+                        ItemID = countUp.ItemID,
+                        Count = countUp.Count,
+                        UndergoingProcess = countUp.UndergoingProcess,
+                        IsPartial = countUp.IsPartial,
                     }, MessageType.SpecificViewUpdate);
-
                 }
-
             }
         }
 
