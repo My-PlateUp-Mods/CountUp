@@ -1,12 +1,14 @@
-﻿using Kitchen;
+using Kitchen;
 using KitchenData;
 using KitchenLib.References;
 using KitchenMods;
 using MessagePack;
 using TMPro;
-using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
+using Unity.Collections;
+using Kitchen.NetworkSupport;
+using System.Linq;
 
 namespace KitchenCountUp.Views
 {
@@ -20,29 +22,27 @@ namespace KitchenCountUp.Views
             CountText.text = data.Count.ToString();
         }
 
+        [UpdateInGroup(typeof(ViewSystemsGroup))]
         public class UpdateView : IncrementalViewSystemBase<ViewData>, IModSystem
         {
             private EntityQuery query;
+
             protected override void Initialise()
             {
-                query = GetEntityQuery(new QueryHelper().All(typeof(CAppliance), typeof(CLinkedView)).Any(typeof(CItemProvider), typeof(CApplianceBin)));
+                query = GetEntityQuery(new QueryHelper().All(typeof(CCountUpAppliance), typeof(CLinkedView)));
             }
 
             protected override void OnUpdate()
             {
                 var entities = query.ToEntityArray(Allocator.Temp);
-
                 foreach (var entity in entities)
                 {
+                    Require<CCountUpAppliance>(entity, out var countUp);
                     Require<CLinkedView>(entity, out var view);
-
-                    bool hasProvider = Require<CItemProvider>(entity, out var provider);
-                    bool hasBin = Require<CApplianceBin>(entity, out var bin);
-                    var useCount = (hasProvider && Mod.LimitedProviderPreference.Get() && provider.Maximum > 1) || (hasBin && Mod.BinPreference.Get() && bin.Capacity < 300);
                     SendUpdate(view, new ViewData()
                     {
-                        Count = useCount ? (hasProvider ? provider.Available : hasBin ? bin.Capacity - bin.CurrentAmount : 0) : 0,
-                        UseCount = useCount
+                        Count = countUp.Count,
+                        UseCount = countUp.UseCount
                     }, MessageType.SpecificViewUpdate);
                 }
             }
