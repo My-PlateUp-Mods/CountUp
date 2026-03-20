@@ -35,7 +35,7 @@ namespace KitchenCountUp.Views
         {
             ProcessIcons.gameObject.transform.localPosition = Vector3.up * 0.8f;
             string iconSet = Mod.ItemSplitPreference.Get() && Data.Count > 0 && Data.Count < 300 ? $"{Item.GetIconSet(item)}<cspace=-35>{Data.Count}</cspace>" : Item.GetIconSet(item);
-            ProcessIcons.text = !Data.IsPartial ? iconSet : "";
+            ProcessIcons.text = iconSet;
         }
 
         private void UpdateForProcess(ViewData Data, Item item)
