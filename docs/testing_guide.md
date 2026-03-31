@@ -1,6 +1,6 @@
 # CountUp! Multiplayer Testing Guide
 
-This guide is for testers verifying the multiplayer synchronization of the CountUp! v2.1.0 update.
+This guide is for testers verifying the multiplayer synchronization of the CountUp! v2.1.1 update.
 
 ## Test Setup
 1. **Host** installs the new `CountUp.dll`.
@@ -33,7 +33,7 @@ This guide is for testers verifying the multiplayer synchronization of the Count
 
 *Note: The mod now uses a centralized identity-based host check (`NetworkingUtils.IsHost()`) and the `Kitchen` namespace for custom components. This ensures that host-sent data is natively synchronized to all clients via PlateUp's engine.*
 
-## File Manifest (v2.1.0)
+## File Manifest (v2.1.1)
 ### Modified
 - `Mod.cs`
 - `CountUp.csproj`

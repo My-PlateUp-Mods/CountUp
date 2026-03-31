@@ -12,7 +12,7 @@ namespace KitchenCountUp
     {
         public const string MOD_GUID = "Swift.PlateUp.CountUp";
         public const string MOD_NAME = "CountUp!";
-        public const string MOD_VERSION = "2.1.0";
+        public const string MOD_VERSION = "2.1.1";
         public const string MOD_AUTHOR = "Swift, Nova & Penthilus";
         public const string MOD_GAMEVERSION = ">=1.3.0";
 
