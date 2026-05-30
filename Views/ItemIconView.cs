@@ -18,8 +18,14 @@ namespace KitchenCountUp.Views
 
         protected override void UpdateData(ViewData Data)
         {
-            if (ProcessIcons == null || !GameData.Main.TryGet<Item>(Data.ItemID, out var item))
+            if (ProcessIcons == null)
                 return;
+
+            if (Data.ItemID == 0 || !GameData.Main.TryGet<Item>(Data.ItemID, out var item))
+            {
+                ProcessIcons.text = "";
+                return;
+            }
 
             if (Data.UndergoingProcess)
             {
