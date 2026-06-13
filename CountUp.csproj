@@ -88,6 +88,9 @@
     <Reference Include="KitchenMods">
       <HintPath>$(PlateUpGameFolder)\PlateUp_Data\Managed\KitchenMods.dll</HintPath>
     </Reference>
+    <Reference Include="PlatformSettings">
+      <HintPath>$(PlateUpGameFolder)\PlateUp_Data\Managed\PlatformSettings.dll</HintPath>
+    </Reference>
     <Reference Include="MessagePack">
       <HintPath>$(PlateUpGameFolder)\PlateUp_Data\Managed\MessagePack.dll</HintPath>
     </Reference>
