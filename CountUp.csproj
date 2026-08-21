@@ -80,13 +80,16 @@
       <HintPath>$(PlateUpWorkshopFolder)\2898069883\KitchenLib-Workshop.dll</HintPath>
     </Reference>
     <Reference Include="PreferenceSystem">
-      <HintPath>$(PlateUpWorkshopFolder)\2949018507\PreferenceSystem-Workshop.dll</HintPath>
+      <HintPath>$(PlateUpWorkshopFolder)\3778997607\PreferenceSystem-Workshop.dll</HintPath>
     </Reference>
     <Reference Include="KitchenMode">
       <HintPath>$(PlateUpGameFolder)\PlateUp_Data\Managed\KitchenMode.dll</HintPath>
     </Reference>
     <Reference Include="KitchenMods">
       <HintPath>$(PlateUpGameFolder)\PlateUp_Data\Managed\KitchenMods.dll</HintPath>
+    </Reference>
+    <Reference Include="PlatformSettings">
+      <HintPath>$(PlateUpGameFolder)\PlateUp_Data\Managed\PlatformSettings.dll</HintPath>
     </Reference>
     <Reference Include="MessagePack">
       <HintPath>$(PlateUpGameFolder)\PlateUp_Data\Managed\MessagePack.dll</HintPath>

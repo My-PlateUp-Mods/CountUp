@@ -1,5 +1,6 @@
 using Kitchen;
 using Kitchen.NetworkSupport;
+using Platforms;
 using System.Linq;
 
 namespace KitchenCountUp
@@ -8,22 +9,7 @@ namespace KitchenCountUp
     {
         public static bool IsHost()
         {
-            if (Session.NetworkPeers == null) return true;
-
-            bool isHost = Session.NetworkPeers.Count <= 1;
-            if (!isHost)
-            {
-                var peers = Session.NetworkPeers.ToArray();
-                foreach (var peer in peers)
-                {
-                    if (peer.Item2.Connection == ConnectionType.Local)
-                    {
-                        isHost = peer.Item1 == Session.HostIdentifier;
-                        break;
-                    }
-                }
-            }
-            return isHost;
+            return Session.NetworkedPlayState != NetworkedPlayState.Client;
         }
     }
 }

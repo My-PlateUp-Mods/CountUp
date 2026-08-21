@@ -1,6 +1,6 @@
 # CountUp! Multiplayer Testing Guide
 
-This guide is for testers verifying the multiplayer synchronization of the CountUp! v2.1.1 update.
+This guide is for testers verifying the multiplayer synchronization of the CountUp! v2.1.2 update.
 
 ## Test Setup
 
@@ -33,12 +33,17 @@ This guide is for testers verifying the multiplayer synchronization of the Count
 
 ## Expected Behavior
 
-- **Success:** The Client sees the exact numbers the Host sees at all times, and they update in real-time.
-- **Failure:** The Client sees numbers that do not match the Host's values or seeing no numbers when the Host sees them.
+- **Success:**
+  - The Client sees the exact numbers the Host sees at all times, and they update in real-time.
+  - No `MissingMethodException` is thrown in the client's log files.
+  - Client frame rates remain stable without spikes or performance degradation while counters are visible.
+- **Failure:**
+  - The Client sees numbers that do not match the Host's values or seeing no numbers when the Host sees them.
+  - The client's PlateUp! logs (usually located at `%appdata%\..\LocalLow\It's Happening\PlateUp\Player.log`) contain `MissingMethodException` relating to `Kitchen.IObjectView.GetSubView<T>()` or view updates.
 
 *Note: The mod now uses a centralized identity-based host check (`NetworkingUtils.IsHost()`) and the `Kitchen` namespace for custom components. This ensures that host-sent data is natively synchronized to all clients via PlateUp's engine.*
 
-## File Manifest (v2.1.1)
+## File Manifest (v2.1.2)
 
 ### Modified
 
