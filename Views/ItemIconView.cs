@@ -40,14 +40,22 @@ namespace KitchenCountUp.Views
         private void UpdateForDefault(ViewData Data, Item item)
         {
             ProcessIcons.gameObject.transform.localPosition = Vector3.up * 0.8f;
-            string iconSet = Mod.ItemSplitPreference.Get() && Data.Count > 0 && Data.Count < 300 ? $"{Item.GetIconSet(item)}<cspace=-35>{Data.Count}</cspace>" : Item.GetIconSet(item);
+
+            bool isInfiniteSplittable = item.IsSplittable && item.SplitCount >= 999;
+            if (isInfiniteSplittable && Data.HideInfiniteSplitIcon)
+            {
+                ProcessIcons.text = "";
+                return;
+            }
+
+            string iconSet = Data.ItemSplitPreference && Data.Count > 0 && Data.Count < 300 ? $"{Item.GetIconSet(item)}<cspace=-35>{Data.Count}</cspace>" : Item.GetIconSet(item);
             ProcessIcons.text = iconSet;
         }
 
         private void UpdateForProcess(ViewData Data, Item item)
         {
             ProcessIcons.gameObject.transform.localPosition = Vector3.up * 1.25f;
-            ProcessIcons.text = Mod.ItemSplitPreference.Get() && Data.Count > 0 && Data.Count < 300 ? Data.Count.ToString() : "";
+            ProcessIcons.text = Data.ItemSplitPreference && Data.Count > 0 && Data.Count < 300 ? Data.Count.ToString() : "";
         }
 
         [UpdateInGroup(typeof(ViewSystemsGroup))]
@@ -74,6 +82,8 @@ namespace KitchenCountUp.Views
                         Count = countUp.Count,
                         UndergoingProcess = countUp.UndergoingProcess,
                         IsPartial = countUp.IsPartial,
+                        HideInfiniteSplitIcon = Mod.HideInfiniteSplitIconPreference.Get(),
+                        ItemSplitPreference = Mod.ItemSplitPreference.Get(),
                     }, MessageType.SpecificViewUpdate);
                 }
             }
@@ -90,10 +100,15 @@ namespace KitchenCountUp.Views
 
             [Key(3)] public bool IsPartial;
 
+            [Key(4)] public bool HideInfiniteSplitIcon;
+
+            [Key(5)] public bool ItemSplitPreference;
+
             public IUpdatableObject GetRelevantSubview(IObjectView view) => view.GetSubView<ItemIconView>();
 
             public bool IsChangedFrom(ViewData check) => ItemID != check.ItemID || Count != check.Count || 
-                IsPartial != check.IsPartial || UndergoingProcess != check.UndergoingProcess;
+                IsPartial != check.IsPartial || UndergoingProcess != check.UndergoingProcess ||
+                HideInfiniteSplitIcon != check.HideInfiniteSplitIcon || ItemSplitPreference != check.ItemSplitPreference;
         }
     }
 }

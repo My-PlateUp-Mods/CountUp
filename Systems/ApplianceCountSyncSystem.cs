@@ -1,4 +1,5 @@
 using Kitchen;
+using KitchenData;
 using KitchenMods;
 using Unity.Collections;
 using Unity.Entities;
@@ -28,11 +29,36 @@ namespace KitchenCountUp.Systems
             {
                 bool hasProvider = Require<CItemProvider>(entity, out var provider);
                 bool hasBin = Require<CApplianceBin>(entity, out var bin);
-                var useCount = (hasProvider && Mod.LimitedProviderPreference.Get() && provider.Maximum > 1) || (hasBin && Mod.BinPreference.Get() && bin.Capacity < 300);
 
-                int count = useCount ? (hasProvider ? provider.Available : hasBin ? bin.Capacity - bin.CurrentAmount : 0) : 0;
+                bool isInfiniteOrOverlapping = false;
+                bool hasColorblindConflict = false;
+                if (hasProvider && GameData.Main.TryGet<Item>(provider.ProvidedItem, out var item))
+                {
+                    bool hasColorblindLabel = item.Prefab != null && item.Prefab.transform.Find("Colour Blind") != null;
+                    bool isInfinite = provider.Maximum > 50;
+                    hasColorblindConflict = hasColorblindLabel;
 
-                Set(entity, new CCountUpAppliance { Count = count, UseCount = useCount });
+                    bool hideForColorblind = hasColorblindLabel && !Mod.ShowCountsForColorblindProvidersPreference.Get();
+                    isInfiniteOrOverlapping = isInfinite || hideForColorblind;
+                }
+
+                var useCount = (hasProvider && !isInfiniteOrOverlapping && Mod.LimitedProviderPreference.Get() && provider.Maximum > 1) || (hasBin && Mod.BinPreference.Get() && bin.Capacity < 300);
+
+                int count = 0;
+                if (useCount)
+                {
+                    if (hasProvider)
+                    {
+                        int heldItemOffset = (Require<CItemHolder>(entity, out var holder) && holder.HeldItem != Entity.Null) ? 1 : 0;
+                        count = provider.Available + heldItemOffset;
+                    }
+                    else if (hasBin)
+                    {
+                        count = bin.Capacity - bin.CurrentAmount;
+                    }
+                }
+
+                Set(entity, new CCountUpAppliance { Count = count, UseCount = useCount, HasColorblindConflict = hasColorblindConflict });
             }
         }
     }

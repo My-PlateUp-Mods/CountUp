@@ -24,4 +24,7 @@ This mod has been updated to use the new native ECS multiplayer architecture:
 
 ### Compatibility Notes
 
+- **v2.1.3 Update**: Programmatically resolved overlapping counts and colorblind labels. Restored standard native portion icons and added preference menu options:
+  - `"Hide Portion Icons For Infinitely Portionable Items"`: Toggles portion icons on infinite items.
+  - `"Show Counts For Colorblind Providers"`: Displays provider counts for colorblind items (like Ketchup and Chocolate Syrup) shifted dynamically to the right to avoid overlapping colorblind text.
 - **v2.1.2 Update**: Recompiled against the latest game assemblies to fix a `MissingMethodException` on `IObjectView.GetSubView<T>()` during multiplayer sessions, which previously caused massive frame rate drops for clients. Now fully compatible with PlateUp! v1.5+.
