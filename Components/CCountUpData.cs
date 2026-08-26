@@ -9,6 +9,7 @@ namespace Kitchen
     {
         [Key(0)] public int Count;
         [Key(1)] public bool UseCount;
+        [Key(2)] public bool HasColorblindConflict;
     }
 
     [MessagePackObject]

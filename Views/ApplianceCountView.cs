@@ -20,6 +20,14 @@ namespace KitchenCountUp.Views
         {
             CountText.gameObject.SetActive(data.UseCount);
             CountText.text = data.Count.ToString();
+            if (data.HasColorblindConflict)
+            {
+                CountText.transform.localPosition = new UnityEngine.Vector3(0.4f, 1.25f, 0f);
+            }
+            else
+            {
+                CountText.transform.localPosition = new UnityEngine.Vector3(0f, 1.25f, 0f);
+            }
         }
 
         [UpdateInGroup(typeof(ViewSystemsGroup))]
@@ -42,7 +50,8 @@ namespace KitchenCountUp.Views
                     SendUpdate(view, new ViewData()
                     {
                         Count = countUp.Count,
-                        UseCount = countUp.UseCount
+                        UseCount = countUp.UseCount,
+                        HasColorblindConflict = countUp.HasColorblindConflict
                     }, MessageType.SpecificViewUpdate);
                 }
             }
@@ -55,9 +64,11 @@ namespace KitchenCountUp.Views
 
             [Key(1)] public bool UseCount;
 
+            [Key(2)] public bool HasColorblindConflict;
+
             public IUpdatableObject GetRelevantSubview(IObjectView view) => view.GetSubView<ApplianceCountView>();
 
-            public bool IsChangedFrom(ViewData check) => UseCount != check.UseCount || Count != check.Count;
+            public bool IsChangedFrom(ViewData check) => UseCount != check.UseCount || Count != check.Count || HasColorblindConflict != check.HasColorblindConflict;
         }
     }
 }
