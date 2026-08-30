@@ -58,7 +58,15 @@ namespace KitchenCountUp.Systems
                     }
                 }
 
-                Set(entity, new CCountUpAppliance { Count = count, UseCount = useCount, HasColorblindConflict = hasColorblindConflict });
+                Set(entity, new CCountUpAppliance { Count = count, UseCount = useCount });
+                if (hasColorblindConflict)
+                {
+                    Set(entity, new CCountUpColorblindConflict { HasColorblindConflict = true });
+                }
+                else if (Has<CCountUpColorblindConflict>(entity))
+                {
+                    EntityManager.RemoveComponent<CCountUpColorblindConflict>(entity);
+                }
             }
         }
     }

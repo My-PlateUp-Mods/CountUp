@@ -47,11 +47,12 @@ namespace KitchenCountUp.Views
                 {
                     Require<CCountUpAppliance>(entity, out var countUp);
                     Require<CLinkedView>(entity, out var view);
+                    bool hasConflict = Has<CCountUpColorblindConflict>(entity);
                     SendUpdate(view, new ViewData()
                     {
                         Count = countUp.Count,
                         UseCount = countUp.UseCount,
-                        HasColorblindConflict = countUp.HasColorblindConflict
+                        HasColorblindConflict = hasConflict
                     }, MessageType.SpecificViewUpdate);
                 }
             }
